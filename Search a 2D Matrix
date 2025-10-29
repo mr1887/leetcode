@@ -1,0 +1,32 @@
+//You are given an m x n 2-D integer array matrix and an integer target.
+
+//Each row in matrix is sorted in non-decreasing order.
+//The first integer of every row is greater than the last integer of the previous row.
+//Return true if target exists within matrix or false otherwise.
+Dùng Binary search 
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int dau = 0;
+        int cuoi = matrix[0].length - 1;
+        int k =0; // lưu hàng có giá trị cần tìm
+        for (int j =0; j < matrix.length ;j++){ 
+            if(matrix[j][cuoi] >= target){
+                k = j;
+                break;
+            }
+        }
+        while (dau <= cuoi){
+            int giua = dau +  ((cuoi - dau))/2;
+            if (matrix[k][giua] > target){
+                cuoi = giua -1;
+            }
+            else if (matrix[k][giua] < target){
+                dau = giua + 1;
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
+}
+// O(m + log(n)) có thể dùng binary search cho phần tìm kiếm hàng có giá trị cần tìm thì tối ưu hơn O(logm + logn)
